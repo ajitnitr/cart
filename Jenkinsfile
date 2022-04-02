@@ -1,8 +1,32 @@
-@Library('roboshop') _
+pipeline {
+  agent {
+    label 'WORKSTATION'
+  }
 
-// Variables
-env.COMPONENT = "cart"
-env.BUILD_LABEL = "WORKSTATION"
+  triggers {
+    pollSCM('*/2 * * * *')
+  }
 
-// Library Groovy file
-nodejs()
+  stages {
+
+    stage('Compile the Code') {
+      steps {
+        sh 'compile code'
+      }
+    }
+
+    stage('Check the Code Quality') {
+      steps {
+        sh 'Check the code Quality'
+      }
+    }
+
+    stage('Test Cases') {
+      steps {
+        sh 'Test Cases'
+      }
+    }
+
+  }
+
+}
